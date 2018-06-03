@@ -1,0 +1,5 @@
+ <div th:fragment="notification">
+ <div class="alert alert-success" role="alert">
+     <span  class="${class}" th:text="${#messages.msgOrNull(#ctx.getVariable('notificationMessage'))}" />
+ </div>
+ </div>

@@ -22,15 +22,15 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
 
 	@Autowired
 	private DataSource dataSource;
-	
-	
+
 	
 	@Override
 	protected void configure(AuthenticationManagerBuilder auth)
 			throws Exception {
 		auth.
 			jdbcAuthentication()
-				.usersByUsernameQuery("select login, password from user where login=?")
+				.usersByUsernameQuery("select login, password, TRUE from users where login=?")
+				.authoritiesByUsernameQuery("select login, 'ROLE_USER' from users where login=?")
 				.dataSource(dataSource)
 				.passwordEncoder(bCryptPasswordEncoder);
 	}
@@ -43,12 +43,13 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
 				.antMatchers("/").permitAll()
 				.antMatchers("/login").permitAll()
 				.antMatchers("/index.html").permitAll()
-				.antMatchers("/registration").permitAll()
+				.antMatchers("/register").permitAll()
+				.antMatchers("/notification").permitAll()
 				.antMatchers("/admin/**").authenticated().anyRequest()
 				.authenticated().and().csrf().disable().formLogin()
 				.loginPage("/login").failureUrl("/login?error=true")
-				.defaultSuccessUrl("/admin/home")
-				.usernameParameter("email")
+				.successForwardUrl("/welcome")
+				.usernameParameter("login")
 				.passwordParameter("password")
 				.and().logout()
 				.logoutRequestMatcher(new AntPathRequestMatcher("/logout"))

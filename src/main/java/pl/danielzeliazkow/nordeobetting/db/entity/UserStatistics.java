@@ -15,8 +15,8 @@ public class UserStatistics {
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	private int id;
 	
-	@OneToOne
-	private User user;
+	@OneToOne(mappedBy="userStatistics")
+	private Users users;
 	
 	private int points;
 	
@@ -32,12 +32,12 @@ public class UserStatistics {
 		this.id = id;
 	}
 
-	public User getUser() {
-		return user;
+	public Users getUsers() {
+		return users;
 	}
 
-	public void setUser(User user) {
-		this.user = user;
+	public void setUsers(Users user) {
+		this.users = user;
 	}
 
 	public int getPoints() {

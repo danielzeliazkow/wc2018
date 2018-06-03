@@ -1,0 +1,67 @@
+ <div th:fragment="register">
+<div class="container">
+
+
+<div class="row justify-content-center">
+<div class="col-md-6">
+<div class="card">
+<header class="card-header">
+	<h4 class="card-title mt-2">Register</h4>
+</header>
+<article class="card-body">
+<form th:action="@{/register}" th:object="${users}" method="post">
+	
+		<div class="form-group">
+		<label>Login *</label>
+		<input type="text" th:field="*{login}" class="form-control" placeholder="">
+		<p class="alert alert-danger" role="alert" th:each="error: ${#fields.errors('login')}"
+          th:text="${error}"></p>
+		</div> 
+		<div class="form-row">
+		<div class="col form-group">
+			<label>First name *</label>   
+		  	<input type="text" th:field="*{firstName}" class="form-control" placeholder="">
+		  	<p class="alert alert-danger" role="alert" th:each="error: ${#fields.errors('firstName')}"
+             th:text="${error}"></p>
+		</div> <!-- form-group end.// -->
+		<div class="col form-group">
+			<label>Last name *</label>
+		  	<input type="text" th:field="*{lastName}" class="form-control" placeholder=" ">
+		  	<p class="alert alert-danger" role="alert" th:each="error: ${#fields.errors('lastName')}"
+            th:text="${error}"></p>
+		</div> <!-- form-group end.// -->
+	</div> <!-- form-row end.// -->
+	<div class="form-group">
+		<label>Email address *</label>
+		<input type="email" th:field="*{email}" class="form-control" placeholder="">
+		<p class="alert alert-danger" role="alert" th:each="error: ${#fields.errors('email')}"
+          th:text="${error}"></p>
+	</div> <!-- form-group end.// -->	
+	<div class="form-group">
+		<label>Password *</label>
+	    <input th:field="*{password}" class="form-control" type="password">
+	    <p class="alert alert-danger" role="alert" th:each="error: ${#fields.errors('password')}"
+          th:text="${error}"></p>
+	</div> <!-- form-group end.// --> 
+	<div class="form-group">
+		<label>Repeat password *</label>
+	    <input th:field="*{retypePassword}" class="form-control" type="password">
+	    <p class="alert alert-danger" role="alert" th:each="error: ${#fields.errors('retypePassword')}"
+          th:text="${error}"></p>
+	</div> <!-- form-group end.// -->   
+	</div> <!-- form-row.// -->
+	
+    <div class="form-group">
+        <button type="submit" class="btn btn-primary btn-block"> Register  </button>
+    </div> <!-- form-group// -->      
+                                              
+</form>
+</article> <!-- card-body end .// -->
+<div class="border-top card-body text-center">Have an account? <a href="/login">Log In</a></div>
+</div> <!-- card.// -->
+</div> <!-- col.//-->
+
+</div> <!-- row.//-->
+
+
+</div> 

@@ -1,19 +1,27 @@
 package pl.danielzeliazkow.nordeobetting.db.entity;
 
+import java.util.List;
+
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.ManyToMany;
+import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
 import javax.persistence.Transient;
 import javax.validation.constraints.NotEmpty;
 
+import org.hibernate.annotations.Cascade;
+
+
 @Table(name = "USERS")
 @Entity
-public class User {
+public class Users {
 	
-	public User() {
+	public Users() {
 		userStatistics = new UserStatistics();
 	}
 	
@@ -30,16 +38,23 @@ public class User {
 	
 	@NotEmpty
 	private String lastName;
+	
+	@NotEmpty
+	private String email;
 		
 	@NotEmpty
 	private String password;
 	
+	@Transient
 	@NotEmpty
+	private String retypePassword;
+	
 	private boolean isAdmin;
 	
-	@OneToOne(mappedBy="user")
+	@OneToOne(cascade=CascadeType.ALL)
 	private UserStatistics userStatistics;
-
+	
+	
 	public int getId() {
 		return id;
 	}
@@ -86,6 +101,31 @@ public class User {
 
 	public void setAdmin(boolean isAdmin) {
 		this.isAdmin = isAdmin;
+	}
+
+	public UserStatistics getUserStatistics() {
+		return userStatistics;
+	}
+
+	public void setUserStatistics(UserStatistics userStatistics) {
+		this.userStatistics = userStatistics;
+	}
+
+
+	public String getRetypePassword() {
+		return retypePassword;
+	}
+
+	public void setRetypePassword(String retypePassword) {
+		this.retypePassword = retypePassword;
+	}
+
+	public String getEmail() {
+		return email;
+	}
+
+	public void setEmail(String email) {
+		this.email = email;
 	}
 	
 	

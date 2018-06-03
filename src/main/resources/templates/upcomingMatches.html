@@ -1,0 +1,40 @@
+ <div th:fragment="upcomingMatches">
+ 
+
+<article class="card-body">
+<form th:action="@{/saveBets}" th:object="${bets}" method="post">
+	
+		  <div class="form-group">
+        <button type="submit" class="btn btn-primary btn-block"> Save bets  </button>
+        <p class="alert alert-danger" role="alert" th:each="error: ${#fields.errors()}" th:text="${error}"></p> 
+    </div> <!-- form-group// -->  
+	
+	<div th:each="bet, iterStat : ${bets.list}" style=" border: 2px solid grey; border-radius: 5px;">
+
+
+		
+		<div style="color:MediumSeaGreen;" th:text="${#temporals.format(bet.match.date, 'dd-MM HH:mm') + '  ' + #temporals.dayOfWeekName(bet.match.date)}"/>
+		<div class="form-row">
+		<div class="col form-group">
+			<label><div th:text="${bet.match.teamOneName}"/></label>   
+ 		  	<input type="text" th:field="*{list[__${iterStat.index}__].teamOneScore}" class="form-control" placeholder=""> 
+ 		  	<input type="hidden" th:field="*{list[__${iterStat.index}__].id}" class="form-control" placeholder=""> 
+ 		  	<input type="hidden" th:field="*{list[__${iterStat.index}__].match.date}" class="form-control" placeholder="">
+		</div> <!-- form-group end.// -->
+		<div class="col form-group">
+			<label><div th:text="${bet.match.teamTwoName}"/></label>   
+		  	<input type="text" th:field="*{list[__${iterStat.index}__].teamTwoScore}" class="form-control" placeholder="">
+		</div> <!-- form-group end.// -->
+	</div> <!-- form-row end.// -->
+</div>
+   
+     <div class="form-group">
+        <button type="submit" class="btn btn-primary btn-block"> Save bets  </button>
+    </div> <!-- form-group// -->     
+                                             
+</form>
+</article> <!-- card-body end .// -->
+
+
+ 
+ </div>
