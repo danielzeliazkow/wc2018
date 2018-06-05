@@ -1,0 +1,8 @@
+CREATE SEQUENCE matchsequence2
+  INCREMENT 1
+  MINVALUE 1
+  MAXVALUE 9999
+  START 1
+  CACHE 1;
+ALTER TABLE matchsequence2
+  OWNER TO postgres;
