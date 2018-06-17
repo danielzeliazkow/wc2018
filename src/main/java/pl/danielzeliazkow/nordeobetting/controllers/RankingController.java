@@ -16,7 +16,7 @@ public class RankingController {
 	
 	@RequestMapping("/ranking")
 	public String showRanking(Model model) {
-		model.addAttribute("ranking", userStatisticsRepository.findAllByOrderByPointsAsc());
+		model.addAttribute("ranking", userStatisticsRepository.findAllByOrderByPointsDesc());
 		
 		model.addAttribute("fragmentMain", "ranking");
         return "index";

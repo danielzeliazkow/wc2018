@@ -32,7 +32,6 @@ public class StatisticsGenerator {
 		match.setIsfinished(true);
 		match.setTeamOneResult(scoreOne);
 		match.setTeamTwoResult(scoreTwo);
-//		matchRepository.save(match);
 		
 		List<MatchBet> bets = matchBetRepository.findMatchBetListByMatch(match.getId());		
 		bets.stream().filter(this::isBetComplete).forEach(bet -> calculatePoints(bet, match));
@@ -53,10 +52,8 @@ public class StatisticsGenerator {
 		
 		if(awardedPoints > 0) {			
 			userStatistics.addPoints(awardedPoints);
-//			userStatisticsRepository.save(userStatistics);
-			bet.setPoints(awardedPoints);
-//			matchBetRepository.save(bet);
 		}
+		bet.setPoints(awardedPoints);
 	}
 	
 	private boolean checkGoalScorePredicted(MatchBet bet, Match match) {

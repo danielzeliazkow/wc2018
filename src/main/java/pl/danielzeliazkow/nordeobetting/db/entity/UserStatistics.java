@@ -65,7 +65,7 @@ public class UserStatistics {
 	}
 	
 	public void addPoints(int value) {
-		this.points =+ value;
+		this.points += value;
 	}
 	
 }

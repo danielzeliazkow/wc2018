@@ -12,7 +12,7 @@ import pl.danielzeliazkow.nordeobetting.db.entity.UserStatistics;
 @Repository
 public interface UserStatisticsRepository extends JpaRepository<UserStatistics, Integer> {
 	
-	public List<UserStatistics> findAllByOrderByPointsAsc();
+	public List<UserStatistics> findAllByOrderByPointsDesc();
 	
 	@Query("select us from UserStatistics us where us.users.id = ?1")
 	public UserStatistics findStatisticsByUser(int id);
