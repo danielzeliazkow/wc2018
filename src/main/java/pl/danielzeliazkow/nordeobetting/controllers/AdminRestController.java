@@ -16,6 +16,13 @@ public class AdminRestController {
 
 	@RequestMapping("/admin/addMatch")
 	public void addMatch(@RequestParam("id") int id, @RequestParam("scoreOne") int scoreOne, @RequestParam("scoreTwo") int scoreTwo) {
-		statisticsGenerator.generateStatistics(id, scoreOne, scoreTwo);
+		statisticsGenerator.updateStatisticsByMatch(id, scoreOne, scoreTwo);
 	}
+	
+	@RequestMapping("/admin/regenerate")
+	public void regenerateStatistics() {
+		statisticsGenerator.generateStatisticsFromScratch();
+	}
+	
+	
 }

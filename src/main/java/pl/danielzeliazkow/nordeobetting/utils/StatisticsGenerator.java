@@ -20,19 +20,31 @@ public class StatisticsGenerator {
 
 	@Autowired
 	private MatchRepository matchRepository;
-	
+		
 	@Autowired
 	private MatchBetRepository matchBetRepository;
 	
 	@Autowired
 	private UserStatisticsRepository userStatisticsRepository;
 	
-	public void generateStatistics(int matchId, int scoreOne, int scoreTwo) {
+	public void generateStatisticsFromScratch() {
+		List<Match> fisnihedMatches = matchRepository.findFinishedMatches();
+		fisnihedMatches.forEach(this::updateStatistics);
+	}
+	
+	public void updateStatisticsByMatch(int matchId, int scoreOne, int scoreTwo) {
 		Match match = matchRepository.findById(matchId).get();
+		updateMatch(match, scoreOne, scoreTwo);
+		updateStatistics(match);
+	}
+	
+	private void updateMatch(Match match, int scoreOne, int scoreTwo) {
 		match.setIsfinished(true);
 		match.setTeamOneResult(scoreOne);
 		match.setTeamTwoResult(scoreTwo);
-		
+	}
+	
+	private void updateStatistics(Match match) {		
 		List<MatchBet> bets = matchBetRepository.findMatchBetListByMatch(match.getId());		
 		bets.stream().filter(this::isBetComplete).forEach(bet -> calculatePoints(bet, match));
 	}
