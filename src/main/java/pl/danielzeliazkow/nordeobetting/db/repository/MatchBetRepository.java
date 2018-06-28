@@ -20,6 +20,10 @@ public interface MatchBetRepository extends JpaRepository<MatchBet, Integer>{
 	@Query("select mb from MatchBet mb where mb.user = ?1 order by mb.match.date")
 	public List<MatchBet> findMatchBetListByUser(Users user);
 	
+	@Transactional(readOnly=true)
+	@Query("select mb from MatchBet mb where mb.match.id = ?1")
+	public List<MatchBet> findMatchBetListByMatch(int id);
+	
 	@Modifying
 	@Query("update MatchBet mb set mb.teamOneScore = :teamOneScore, mb.teamTwoScore = :teamTwoScore where mb.id = :id")
 	public void updateUserBets(@Param("teamOneScore") Integer teamOneScore, @Param("teamTwoScore") Integer teamTwoScore, @Param("id") int id);

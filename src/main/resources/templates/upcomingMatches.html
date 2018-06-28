@@ -1,5 +1,4 @@
- <div th:fragment="upcomingMatches">
- 
+ <div th:fragment="upcomingMatches"> 
 
 <article class="card-body">
 <form th:action="@{/saveBets}" th:object="${bets}" method="post">
@@ -10,8 +9,6 @@
     </div> <!-- form-group// -->  
 	
 	<div th:each="bet, iterStat : ${bets.list}" style=" border: 2px solid grey; border-radius: 5px;">
-
-
 		
 		<div style="color:MediumSeaGreen;" th:text="${#temporals.format(bet.match.date, 'dd-MM HH:mm') + '  ' + #temporals.dayOfWeekName(bet.match.date)}"/>
 		<div class="form-row">
@@ -33,8 +30,5 @@
     </div> <!-- form-group// -->     
                                              
 </form>
-</article> <!-- card-body end .// -->
-
-
- 
+</article> <!-- card-body end .// --> 
  </div>

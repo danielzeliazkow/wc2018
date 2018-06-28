@@ -64,5 +64,8 @@ public class UserStatistics {
 		this.scoresPredicted = scoresPredicted;
 	}
 	
-
+	public void addPoints(int value) {
+		this.points =+ value;
+	}
+	
 }

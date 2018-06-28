@@ -23,13 +23,15 @@ public class MatchBet {
 	@ManyToOne
 	private Users user;
 	
-	@Min(0)
 	@Max(20)
+	@Min(0)
 	private Integer  teamOneScore;
 	
-	@Min(0)
 	@Max(20)
+	@Min(0)
 	private Integer  teamTwoScore;
+	
+	private Integer points;
 
 	public int getId() {
 		return id;
@@ -69,6 +71,14 @@ public class MatchBet {
 
 	public void setTeamTwoScore(Integer teamTwoScore) {
 		this.teamTwoScore = teamTwoScore;
+	}
+
+	public Integer getPoints() {
+		return points;
+	}
+
+	public void setPoints(Integer points) {
+		this.points = points;
 	}
 	
 	

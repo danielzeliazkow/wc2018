@@ -1,6 +1,8 @@
 package pl.danielzeliazkow.nordeobetting.controllers;
 
 import java.util.List;
+import java.util.Map;
+import java.util.TreeMap;
 
 import javax.validation.Valid;
 
@@ -15,8 +17,10 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import pl.danielzeliazkow.nordeobetting.db.entity.Match;
 import pl.danielzeliazkow.nordeobetting.db.entity.MatchBet;
 import pl.danielzeliazkow.nordeobetting.db.entity.Users;
+import pl.danielzeliazkow.nordeobetting.db.repository.MatchRepository;
 import pl.danielzeliazkow.nordeobetting.dto.BetsListDto;
 import pl.danielzeliazkow.nordeobetting.service.MatchBetService;
 import pl.danielzeliazkow.nordeobetting.service.UserService;
@@ -29,6 +33,9 @@ public class BettingController {
 	
 	@Autowired
 	private MatchBetService matchBetService;
+	
+	@Autowired
+	private MatchRepository matchRepository;
 	
 	@Autowired
 	private SmartValidator validator;
@@ -59,19 +66,13 @@ public class BettingController {
 		return "redirect:notification";
 	}
 	
-	@RequestMapping("/pendingMatches")
-	public String showPendingMatches(Model model, RedirectAttributes redirectAttributes) {
-		redirectAttributes.addFlashAttribute("fragmentLowerMenu", "bettingLowerMenu");
-		redirectAttributes.addFlashAttribute("notificationKey","msg.info.betting.nomatches");
+	@RequestMapping("/pendingAndFinishedMatches")
+	public String showPendingMatches(Model model, Authentication authentication) {
+		Users user = userService.findUserByLogin(authentication.getName());
+		List<MatchBet> bets= matchBetService.getPendingAndFinishedMatchBetsForUser(user);
+		model.addAttribute("bets", bets);
+		model.addAttribute("fragmentMain", "pendingAndFinishedMatches");
 		model.addAttribute("fragmentLowerMenu", "bettingLowerMenu");
-	    return "redirect:notification";
-	}
-	
-	@RequestMapping("/finishedMatches")
-	public String showFinishedMatches(Model model, RedirectAttributes redirectAttributes) {
-		redirectAttributes.addFlashAttribute("fragmentLowerMenu", "bettingLowerMenu");
-		redirectAttributes.addFlashAttribute("notificationKey","msg.info.betting.nomatches");
-		model.addAttribute("fragmentLowerMenu", "bettingLowerMenu");
-	    return "redirect:notification";
+		return "index";
 	}
 }

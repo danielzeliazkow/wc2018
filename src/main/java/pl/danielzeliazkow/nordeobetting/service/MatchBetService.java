@@ -23,16 +23,9 @@ public class MatchBetService {
 	@Autowired
 	private MatchRepository matchRepository;
 	
-	public List<MatchBet> getFinishedMatchBetsForUser(Users user){
+	public List<MatchBet> getPendingAndFinishedMatchBetsForUser(Users user){
 		List<MatchBet> list = matchBetRepository.findMatchBetListByUser(user);
-		return list.stream().filter(this::isBettingClosed)
-			.filter(m -> m.getMatch().isIsfinished()).collect(Collectors.toList());
-	}
-	
-	public List<MatchBet> getPendingMatchBetsForUser(Users user){
-		List<MatchBet> list = matchBetRepository.findMatchBetListByUser(user);
-		return list.stream().filter(this::isBettingClosed)
-			.filter(m -> !m.getMatch().isIsfinished()).collect(Collectors.toList());
+		return list.stream().filter(this::isBettingClosed).collect(Collectors.toList());
 	}
 	
 	public List<MatchBet> getUpcomingMatchBetsForUser(Users user){
@@ -53,7 +46,8 @@ public class MatchBetService {
 	}
 	
 	public void updateUserBets(List<MatchBet> betList) {
-		betList.forEach(bet -> matchBetRepository.updateUserBets(bet.getTeamOneScore(), bet.getTeamTwoScore(), bet.getId()));	
+		betList.stream().filter(this::isBettingNotClosed)
+			.forEach(bet -> matchBetRepository.updateUserBets(bet.getTeamOneScore(), bet.getTeamTwoScore(), bet.getId()));	
 	}
 	
 	private boolean isBettingClosed(MatchBet m) {

@@ -1,0 +1,30 @@
+ <div th:fragment="pendingAndFinishedMatches"> 
+
+<article class="card-body">
+	
+	<div th:each="bet : ${bets}" style=" border: 2px solid grey; border-radius: 5px;">
+		
+		<div style="color:MediumSeaGreen;" th:text="${#temporals.format(bet.match.date, 'dd-MM HH:mm') + '  ' + #temporals.dayOfWeekName(bet.match.date)}"/>
+		<div class="form-row">
+		<div class="col form-group">
+			<label><div th:text="${bet.match.teamOneName}"/></label>   
+ 		  	<input type="text" th:value="${bet.teamOneScore}" class="form-control" placeholder="" disabled> 
+		</div> <!-- form-group end.// -->
+		<div class="col form-group">
+			<label><div th:text="${bet.match.teamTwoName}"/></label>   
+		  	<input type="text" th:value="${bet.teamTwoScore}" class="form-control" placeholder="" disabled>
+		</div> <!-- form-group end.// -->
+	
+	<div class="col form-group">
+			<label>Actual result: <div th:if="${bet.match.teamOneResult != null and bet.match.teamTwoResult != null}"
+			th:text="${bet.match.teamOneResult + ' : '+bet.match.teamTwoResult}"/></label>
+	</div>
+	<div class="col form-group">
+			<label>Your points: <div th:if="${bet.points != null}" th:text="${bet.points}"/></label>
+	</div>
+	</div> <!-- form-row end.// -->
+</div>   
+                                             
+
+</article> <!-- card-body end .// --> 
+ </div>
