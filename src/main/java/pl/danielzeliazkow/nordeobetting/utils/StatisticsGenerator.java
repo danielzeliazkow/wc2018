@@ -10,8 +10,10 @@ import org.springframework.util.NumberUtils;
 import pl.danielzeliazkow.nordeobetting.db.entity.Match;
 import pl.danielzeliazkow.nordeobetting.db.entity.MatchBet;
 import pl.danielzeliazkow.nordeobetting.db.entity.UserStatistics;
+import pl.danielzeliazkow.nordeobetting.db.entity.Users;
 import pl.danielzeliazkow.nordeobetting.db.repository.MatchBetRepository;
 import pl.danielzeliazkow.nordeobetting.db.repository.MatchRepository;
+import pl.danielzeliazkow.nordeobetting.db.repository.UserRepository;
 import pl.danielzeliazkow.nordeobetting.db.repository.UserStatisticsRepository;
 
 @Service
@@ -27,6 +29,9 @@ public class StatisticsGenerator {
 	@Autowired
 	private UserStatisticsRepository userStatisticsRepository;
 	
+	@Autowired
+	private UserRepository userRepository;
+	
 	public void generateStatisticsFromScratch() {
 		List<Match> fisnihedMatches = matchRepository.findFinishedMatches();
 		fisnihedMatches.forEach(this::updateStatistics);
@@ -36,6 +41,18 @@ public class StatisticsGenerator {
 		Match match = matchRepository.findById(matchId).get();
 		updateMatch(match, scoreOne, scoreTwo);
 		updateStatistics(match);
+	}
+	
+	public void generateMatchBetsForMatch(int id) {
+		Match match = matchRepository.findById(id).get();
+		List<Users> users = userRepository.findAll();
+				
+		for(Users user : users) {
+			MatchBet bet = new MatchBet();
+			bet.setMatch(match);
+			bet.setUser(user);
+			matchBetRepository.save(bet);
+		}
 	}
 	
 	private void updateMatch(Match match, int scoreOne, int scoreTwo) {

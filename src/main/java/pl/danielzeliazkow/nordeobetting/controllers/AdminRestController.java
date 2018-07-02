@@ -24,5 +24,10 @@ public class AdminRestController {
 		statisticsGenerator.generateStatisticsFromScratch();
 	}
 	
+	@RequestMapping("/admin/generateMatchBets")
+	public void generateMatchBets(@RequestParam("id") int id) {
+		statisticsGenerator.generateMatchBetsForMatch(id);
+	}
+	
 	
 }
